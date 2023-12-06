@@ -76,6 +76,8 @@ public class CancerStatisticApp {
         boolean isAuthenticated = new CancerStatisticApp().loginUser(username, password);
         if (isAuthenticated) {
           JOptionPane.showMessageDialog(frame, "Login successful!");
+          frame.setContentPane(createQueryPanel());
+          frame.validate();
         } else {
           JOptionPane.showMessageDialog(frame, "Login failed.");
         }
@@ -160,5 +162,36 @@ public class CancerStatisticApp {
       e.printStackTrace();
     }
     return generatedPassword;
+  }
+
+  public static JPanel createQueryPanel() {
+    JPanel queryPanel = new JPanel();
+    JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"State 1", "State 2"}); // Populate with actual data
+    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new String[]{"Type 1", "Type 2"});
+    JComboBox<String> sexComboBox = new JComboBox<>(new String[]{"Male", "Female"});
+    JComboBox<String> raceComboBox = new JComboBox<>(new String[]{"Race 1", "Race 2"});
+    JButton queryButton = new JButton("Query");
+
+    queryPanel.setLayout(new FlowLayout());
+    queryPanel.add(new JLabel("State:"));
+    queryPanel.add(stateComboBox);
+    queryPanel.add(new JLabel("Cancer Type:"));
+    queryPanel.add(cancerTypeComboBox);
+    queryPanel.add(new JLabel("Sex:"));
+    queryPanel.add(sexComboBox);
+    queryPanel.add(new JLabel("Race:"));
+    queryPanel.add(raceComboBox);
+    queryPanel.add(queryButton);
+
+    queryButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        // Perform the query based on selected items
+        // String state = (String) stateComboBox.getSelectedItem();
+        // Add logic to perform the query and display results
+      }
+    });
+
+    return queryPanel;
   }
 }
