@@ -11,28 +11,28 @@ USE cancerstatisticdb;
 
 -- create the tables
 
-CREATE TABLE demographicgroup
+CREATE TABLE demographicgroup # DO THIS FIRST -- Insert these via created csv
 (
   groupID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  gender VARCHAR(50),
-  race VARCHAR(50),
-  description VARCHAR(64)
+  sex VARCHAR(50) NOT NULL,
+  race VARCHAR(50) NOT NULL,
+  UNIQUE(sex),
+  UNIQUE(race)
 );
 
-CREATE TABLE state
+CREATE TABLE state # DO THIS SECOND -- Insert these via created csv
 (
-	s_name VARCHAR(64) PRIMARY KEY NOT NULL,
-	population INT NOT NULL
+	s_name VARCHAR(64) PRIMARY KEY NOT NULL
 );
 
-CREATE TABLE users 
+CREATE TABLE users # Leave empty for now, will be populated by our frontend
 (
     username VARCHAR(50) PRIMARY KEY,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE user_action
+CREATE TABLE user_action # Further discussion required (what actions can a user take?)
 (
 	a_type INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	role_requirement INT,
@@ -40,7 +40,7 @@ CREATE TABLE user_action
 );
 
 
-CREATE TABLE activitylog 
+CREATE TABLE activitylog # Leave empty for now, will be populated by our frontend
 (
     logid INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     time_stamp TIMESTAMP NOT NULL,
@@ -51,76 +51,74 @@ CREATE TABLE activitylog
     FOREIGN KEY (log_action) REFERENCES user_action(a_type) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE patient
+CREATE TABLE patient # Fabricate these values
 (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
     age INT NOT NULL,
-    gender INT NOT NULL,
-    race INT NOT NULL,
-    FOREIGN KEY (gender) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (race) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE
+    groupID INT NOT NULL,
+    FOREIGN KEY (groupID) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE professional 
+CREATE TABLE professional # Fabricate these values
 (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
     age INT NOT NULL,
     specialization VARCHAR(64) NOT NULL,
-	gender INT NOT NULL,
-    FOREIGN KEY (gender) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE
+	gender VARCHAR(64) NOT NULL
 );
 
-CREATE TABLE report 
-(
-	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    description VARCHAR(200) NOT NULL,
-    time_stamp TIMESTAMP NOT NULL,
-    professional INT NOT NULL,
-    patient INT NOT NULL,
-    FOREIGN KEY (professional) REFERENCES professional(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (patient) REFERENCES patient(id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE cancertype
+CREATE TABLE cancertype # DO THIS THIRD -- Insert these via created csv
 (
 	name VARCHAR(64) PRIMARY KEY NOT NULL,
 	description VARCHAR(64) NOT NULL
 );
 
-CREATE TABLE incidencerate
+CREATE TABLE report # Fabricate these values
+(
+	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    time_stamp TIMESTAMP NOT NULL,
+    professional INT NOT NULL,
+    patient INT NOT NULL,
+    cancer_type VARCHAR(64),
+    FOREIGN KEY (professional) REFERENCES professional(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (cancer_type) REFERENCES cancertype(name) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (patient) REFERENCES patient(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE incidencerate # Insert via csv files
 (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     state VARCHAR(64) NOT NULL,
     cancertype VARCHAR(64) NOT NULL,
-    gender INT NOT NULL,
-    race INT NOT NULL,
+    sex VARCHAR(50) NOT NULL,
+    race VARCHAR(50) NOT NULL,
 	year INT NOT NULL,
 	i_rate FLOAT,
 	case_count INT,
-    population INT REFERENCES state(population) ON UPDATE CASCADE ON DELETE CASCADE,
+    population INT,
     FOREIGN KEY (state) REFERENCES state(s_name) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (cancertype) REFERENCES cancertype(name) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (gender) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (race) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (sex) REFERENCES demographicgroup(sex) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (race) REFERENCES demographicgroup(race) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE deathrate
+CREATE TABLE deathrate # Insert via csv files
 (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     state VARCHAR(64) NOT NULL,
     cancertype VARCHAR(64) NOT NULL,
-    gender INT NOT NULL,
-    race INT NOT NULL,
+    sex VARCHAR(50) NOT NULL,
+    race VARCHAR(50) NOT NULL,
 	year INT NOT NULL,
 	d_rate FLOAT,
 	death_count INT,
-    population INT REFERENCES state(population) ON UPDATE CASCADE ON DELETE CASCADE,
+    population INT,
     FOREIGN KEY (state) REFERENCES state(s_name) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (cancertype) REFERENCES cancertype(name) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (gender) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (race) REFERENCES demographicgroup(groupID) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (sex) REFERENCES demographicgroup(sex) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (race) REFERENCES demographicgroup(race) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
