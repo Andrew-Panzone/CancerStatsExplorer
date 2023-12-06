@@ -1,0 +1,11 @@
+id,time,professional,patient,cancertype
+1,11/9/20 23:00,1,5,Stomach
+2,1/5/20 3:15,3,3,Brain and Other Nervous System
+3,4/4/20 17:55,1,2,Colon and Rectum
+4,6/21/20 9:00,6,7,Esophagus
+5,10/29/20 19:30,8,8,Hodgkin Lymphoma
+6,5/3/20 12:00,3,9,Esophagus
+7,12/21/20 18:01,2,1,Colon and Rectum
+8,9/17/20 3:30,8,10,Colon and Rectum
+9,3/3/20 4:45,9,4,Stomach
+10,3/14/20 21:21,10,6,Esophagus

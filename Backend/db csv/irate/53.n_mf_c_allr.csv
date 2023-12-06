@@ -1,0 +1,53 @@
+Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
+Nevada,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,,,
+Indiana,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,,,
+Utah,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.2,793,3249879
+Colorado,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.4,1772,5807719
+Delaware,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.5,368,986809
+Arizona,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.6,2562,7421401
+Vermont,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.9,239,623347
+Massachusetts,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,28.5,2436,6893574
+Oregon,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,28.8,1523,4241507
+Rhode Island,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,29.2,399,1057125
+District of Columbia,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,29.5,204,712816
+Virginia,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,29.9,3052,8590563
+California,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30,13447,39368078
+New Mexico,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30,780,2106319
+Michigan,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30,3803,9966555
+Washington,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30.1,2650,7693612
+Wisconsin,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30.5,2245,5832655
+North Carolina,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30.6,3963,10600823
+Connecticut,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30.7,1416,3557006
+New Hampshire,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30.8,555,1366275
+Puerto Rico,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,30.8,1467,3281538
+South Carolina,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,31.5,2105,5218040
+Maryland,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,31.5,2291,6055802
+Florida,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,32,9865,21733312
+Minnesota,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,32,2171,5657342
+Idaho,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,32.3,677,1826913
+New York,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,32.8,7981,19336776
+Maine,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,32.9,629,1350141
+Texas,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,33.2,10122,29360759
+Pennsylvania,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,33.3,5688,12783254
+Wyoming,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,33.7,235,582328
+North Dakota,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,34.2,302,765309
+Oklahoma,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,34.4,1613,3980783
+Illinois,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,34.5,5292,12587530
+Ohio,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35,5171,11693217
+Kansas,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.2,1219,2913805
+Missouri,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.3,2706,6151548
+Nebraska,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.5,792,1937552
+New Jersey,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.5,3971,8882371
+Montana,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.6,499,1080577
+South Dakota,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.6,382,892717
+Arkansas,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.6,1325,3030522
+Iowa,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.7,1412,3163561
+Georgia,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,35.9,4336,10710017
+Tennessee,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,36.3,3061,6886834
+Hawaii,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,36.8,660,1407006
+Alabama,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,37,2281,4921532
+Mississippi,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,39.4,1437,2966786
+Louisiana,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,39.5,2203,4645318
+Alaska,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,40.8,305,731158
+West Virginia,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,40.8,1023,1784787
+Kentucky,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,41.2,2279,4477251
