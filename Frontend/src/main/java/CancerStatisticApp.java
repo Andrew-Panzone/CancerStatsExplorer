@@ -6,10 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CancerStatisticApp {
-  private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/CancerStatisticDB"; // Update this line
+  private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/cancerstatisticdb"; // Update this line
   private static String USERNAME;
   private static String PASSWORD;
 
@@ -25,44 +28,72 @@ public class CancerStatisticApp {
     // Establish a connection to test
     try (Connection conn = new CancerStatisticApp().connect()) {
       if (conn != null) {
-        // User interaction logic
-        System.out.println("Select an option: \n1. Register \n2. Login");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consume the newline
-
-        switch (choice) {
-          case 1:
-            // Register user
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter password: ");
-            String password = scanner.nextLine();
-            System.out.print("Enter role: ");
-            String role = scanner.nextLine();
-            new CancerStatisticApp().registerUser(username, password, role);
-            break;
-          case 2:
-            // User login
-            System.out.print("Enter username: ");
-            username = scanner.nextLine();
-            System.out.print("Enter password: ");
-            password = scanner.nextLine();
-            boolean isAuthenticated = new CancerStatisticApp().loginUser(username, password);
-            if (isAuthenticated) {
-              System.out.println("Login successful!");
-            } else {
-              System.out.println("Login failed.");
-            }
-            break;
-          default:
-            System.out.println("Invalid option.");
-        }
+        SwingUtilities.invokeLater(() -> {
+          createAndShowGUI();
+        });
       } else {
         System.out.println("Failed to establish a database connection.");
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  private static void createAndShowGUI() {
+    // Create the main frame
+    JFrame frame = new JFrame("Cancer Statistic Application");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(300, 200);
+
+    // Create UI elements
+    JTextField usernameField = new JTextField(20);
+    JPasswordField passwordField = new JPasswordField(20);
+    JButton loginButton = new JButton("Login");
+    JButton registerButton = new JButton("Register");
+
+    // Layout
+    frame.setLayout(new FlowLayout());
+    frame.add(new JLabel("Username:"));
+    frame.add(usernameField);
+    frame.add(new JLabel("Password:"));
+    frame.add(passwordField);
+    frame.add(loginButton);
+    frame.add(registerButton);
+
+    // Role selection
+    String[] roles = {"Viewer", "Analyst", "Administrator"};
+    JComboBox<String> roleComboBox = new JComboBox<>(roles);
+    frame.add(new JLabel("Role:"));
+    frame.add(roleComboBox);
+
+    // Add action listeners
+    loginButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+
+        boolean isAuthenticated = new CancerStatisticApp().loginUser(username, password);
+        if (isAuthenticated) {
+          JOptionPane.showMessageDialog(frame, "Login successful!");
+        } else {
+          JOptionPane.showMessageDialog(frame, "Login failed.");
+        }
+      }
+    });
+
+    registerButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+        String role = (String) roleComboBox.getSelectedItem();
+        new CancerStatisticApp().registerUser(username, password, role);
+      }
+    });
+
+    // Show the frame
+    frame.setVisible(true);
   }
 
   private Connection connect() {
@@ -92,6 +123,8 @@ public class CancerStatisticApp {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+
+    JOptionPane.showMessageDialog(null, "User registered successfully");
   }
 
   public boolean loginUser(String username, String password) {
