@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -90,7 +91,17 @@ public class CancerStatisticApp {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         String role = (String) roleComboBox.getSelectedItem();
-        new CancerStatisticApp().registerUser(username, password, role);
+
+        if ("Administrator".equals(role)) {
+          String adminPassword = JOptionPane.showInputDialog(frame, "Enter Admin Password:");
+          if (adminPassword != null && adminPassword.equals("cancerdbadmin")) {
+            new CancerStatisticApp().registerUser(username, password, role);
+          } else {
+            JOptionPane.showMessageDialog(frame, "Incorrect Admin Password", "Error", JOptionPane.ERROR_MESSAGE);
+          }
+        } else {
+          new CancerStatisticApp().registerUser(username, password, role);
+        }
       }
     });
 
@@ -166,10 +177,10 @@ public class CancerStatisticApp {
 
   public static JPanel createQueryPanel() {
     JPanel queryPanel = new JPanel();
-    JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"State 1", "State 2"}); // Populate with actual data
-    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new String[]{"Type 1", "Type 2"});
-    JComboBox<String> sexComboBox = new JComboBox<>(new String[]{"Male", "Female"});
-    JComboBox<String> raceComboBox = new JComboBox<>(new String[]{"Race 1", "Race 2"});
+    JComboBox<String> stateComboBox = new JComboBox<>(new CancerStatisticApp().fetchStates()); // Populate with actual data
+    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
+    JComboBox<String> sexComboBox = new JComboBox<>(new CancerStatisticApp().fetchSexes());
+    JComboBox<String> raceComboBox = new JComboBox<>(new CancerStatisticApp().fetchRaces());
     JButton queryButton = new JButton("Query");
 
     queryPanel.setLayout(new FlowLayout());
@@ -193,5 +204,40 @@ public class CancerStatisticApp {
     });
 
     return queryPanel;
+  }
+
+  public String[] fetchCancerTypes() {
+    String sql = "SELECT name FROM cancertype"; // SQL query to fetch cancer types
+    return fetchData(sql);
+  }
+
+  public String[] fetchStates() {
+    String sql = "SELECT sname FROM state";
+    return fetchData(sql);
+  }
+
+  public String[] fetchSexes() {
+    String sql = "SELECT DISTINCT sex FROM demographicgroup";
+    return fetchData(sql);
+  }
+
+  public String[] fetchRaces() {
+    String sql = "SELECT DISTINCT race FROM demographicgroup";
+    return fetchData(sql);
+  }
+
+  private String[] fetchData(String sql) {
+    ArrayList<String> data = new ArrayList<>();
+    try (Connection conn = this.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()) {
+
+      while (rs.next()) {
+        data.add(rs.getString(1)); // assuming the data is in the first column
+      }
+    } catch (SQLException e) {
+      System.out.println("Error fetching data: " + e.getMessage());
+    }
+    return data.toArray(new String[0]);
   }
 }
