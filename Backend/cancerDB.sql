@@ -15,7 +15,8 @@ CREATE TABLE demographicgroup # DO THIS FIRST -- Insert these via created csv
 (
   groupID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   sex VARCHAR(50) NOT NULL,
-  race VARCHAR(50) NOT NULL
+  race VARCHAR(50) NOT NULL,
+  UNIQUE(sex, race)
   #UNIQUE SPECIFICATION REMOVED -- the way we have setup the csv as discussed in snell, they cannot be unique since sex and race repeat 5x3, only imports 3 unique records if kept unique.
 );
 
