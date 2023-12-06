@@ -1,8 +1,8 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Indiana,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Nevada,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-North Dakota,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Puerto Rico,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
+Indiana,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,,,
+Nevada,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,,,
+North Dakota,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,,,
+Puerto Rico,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,,,
 New Mexico,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,5.1,58,783475
 South Dakota,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,5.2,46,734516
 Mississippi,Brain and Other Nervous System,2020,Male and Female,White Non-Hispanic,Incidence,5.7,126,1686946

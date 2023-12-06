@@ -1,10 +1,10 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Nevada,All Types of Cancer,2020,Female,Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-North Dakota,All Types of Cancer,2020,Female,Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Vermont,All Types of Cancer,2020,Female,Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Indiana,All Types of Cancer,2020,Female,Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Wisconsin,All Types of Cancer,2020,Female,Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Female,Hispanic,Incidence,Data not presented,Data not presented,Data not presented
+Nevada,All Types of Cancer,2020,Female,Hispanic,Incidence,,,
+North Dakota,All Types of Cancer,2020,Female,Hispanic,Incidence,,,
+Vermont,All Types of Cancer,2020,Female,Hispanic,Incidence,,,
+Indiana,All Types of Cancer,2020,Female,Hispanic,Incidence,,,
+Wisconsin,All Types of Cancer,2020,Female,Hispanic,Incidence,,,
+Puerto Rico,All Types of Cancer,2020,Female,Hispanic,Incidence,,,
 West Virginia,All Types of Cancer,2020,Female,Hispanic,Incidence,136.5,16,14856
 Mississippi,All Types of Cancer,2020,Female,Hispanic,Incidence,166,46,44894
 Arkansas,All Types of Cancer,2020,Female,Hispanic,Incidence,195.4,138,116595

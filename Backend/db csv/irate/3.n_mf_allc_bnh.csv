@@ -1,9 +1,9 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Indiana,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-North Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Nevada,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Wyoming,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
+Indiana,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,,,
+North Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,,,
+Nevada,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,,,
+Wyoming,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,,,
+Puerto Rico,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,,,
 South Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,182.6,25,24969
 Maine,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,224.7,36,27177
 Hawaii,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Incidence,288.3,69,37370

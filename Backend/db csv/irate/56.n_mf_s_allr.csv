@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Nevada,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
-Indiana,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
+Nevada,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,,,
+Indiana,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,,,
 North Dakota,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,3.9,37,765309
 Wyoming,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,3.9,31,582328
 South Dakota,Stomach,2020,Male and Female,All Races and Ethnicities,Incidence,4,46,892717

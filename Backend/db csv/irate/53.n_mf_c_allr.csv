@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Nevada,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
-Indiana,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
+Nevada,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,,,
+Indiana,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,,,
 Utah,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.2,793,3249879
 Colorado,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.4,1772,5807719
 Delaware,Colon and Rectum,2020,Male and Female,All Races and Ethnicities,Incidence,27.5,368,986809

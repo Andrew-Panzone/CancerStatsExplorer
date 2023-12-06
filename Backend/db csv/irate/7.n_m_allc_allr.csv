@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Nevada,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
-Indiana,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
+Nevada,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,,,
+Indiana,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,,,
 Puerto Rico,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,327.8,7324,1555294
 New Mexico,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,348.2,4567,1042459
 Arizona,All Types of Cancer,2020,Male,All Races and Ethnicities,Incidence,351,16225,3685926

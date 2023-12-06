@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Nevada,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
-Indiana,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
+Nevada,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,,,
+Indiana,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,,,
 Hawaii,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,3.1,26,702640
 New Mexico,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,3.2,42,1063860
 Puerto Rico,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Incidence,3.5,83,1726244

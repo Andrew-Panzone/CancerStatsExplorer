@@ -1,9 +1,9 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Indiana,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Nevada,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Wyoming,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-North Dakota,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
+Indiana,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,,,
+Nevada,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,,,
+Wyoming,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,,,
+North Dakota,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,,,
+Puerto Rico,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,,,
 District of Columbia,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,166.1,42,34413
 Montana,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,191.9,21,12531
 Connecticut,All Types of Cancer,2020,Male and Female,Asian and Pacific Islander Non-Hispanic,Incidence,193.9,316,182848

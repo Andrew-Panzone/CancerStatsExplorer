@@ -1,8 +1,8 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Indiana,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-North Dakota,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Nevada,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,Data not presented,Data not presented,Data not presented
+Indiana,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,,,
+North Dakota,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,,,
+Nevada,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,,,
+Puerto Rico,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,,,
 District of Columbia,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,319.9,389,137827
 New Mexico,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,326.4,2296,395453
 Arizona,All Types of Cancer,2020,Female,White Non-Hispanic,Incidence,350.9,11906,2062065

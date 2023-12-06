@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Case Count,Population
-Nevada,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
-Indiana,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,Data not presented,Data not presented,Data not presented
+Nevada,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,,,
+Indiana,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,,,
 Puerto Rico,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,2.8,151,3281538
 New Mexico,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,3.1,86,2106319
 California,Esophagus,2020,Male and Female,All Races and Ethnicities,Incidence,3.4,1608,39368078
