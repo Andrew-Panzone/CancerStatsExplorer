@@ -1,13 +1,13 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-North Dakota,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Idaho,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-South Dakota,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Vermont,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Maine,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-New Hampshire,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Montana,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Wyoming,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
+North Dakota,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+Idaho,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+South Dakota,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+Vermont,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+Maine,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+New Hampshire,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+Montana,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+Wyoming,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
+Puerto Rico,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,,,
 Alaska,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,151.6,17,17809
 New York,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,154.2,2015,1363338
 Rhode Island,All Types of Cancer,2020,Male,Black Non-Hispanic,Mortality,155.4,39,36978

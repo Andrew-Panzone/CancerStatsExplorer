@@ -1,10 +1,10 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-North Dakota,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Maine,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-South Dakota,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Vermont,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-West Virginia,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,Data not presented,Data not presented,Data not presented
+North Dakota,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,,,
+Maine,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,,,
+South Dakota,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,,,
+Vermont,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,,,
+West Virginia,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,,,
+Puerto Rico,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,,,
 District of Columbia,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,55,26,81115
 Kentucky,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,56.4,52,179277
 Rhode Island,All Types of Cancer,2020,Male and Female,Hispanic,Mortality,57.1,64,176471

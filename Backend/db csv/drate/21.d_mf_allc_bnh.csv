@@ -1,13 +1,13 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-North Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Idaho,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-South Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Vermont,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Maine,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-New Hampshire,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Montana,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Wyoming,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
+North Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+Idaho,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+South Dakota,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+Vermont,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+Maine,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+New Hampshire,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+Montana,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+Wyoming,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
+Puerto Rico,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,,,
 Rhode Island,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,121.6,74,73927
 New York,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,133.9,4487,2913569
 Massachusetts,All Types of Cancer,2020,Male and Female,Black Non-Hispanic,Mortality,137.6,672,548755

@@ -1,5 +1,5 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-Puerto Rico,All Types of Cancer,2020,Male,White Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
+Puerto Rico,All Types of Cancer,2020,Male,White Non-Hispanic,Mortality,,,
 District of Columbia,All Types of Cancer,2020,Male,White Non-Hispanic,Mortality,89.3,106,136184
 Utah,All Types of Cancer,2020,Male,White Non-Hispanic,Mortality,136.9,1616,1287800
 Arizona,All Types of Cancer,2020,Male,White Non-Hispanic,Mortality,149.2,5383,2013357

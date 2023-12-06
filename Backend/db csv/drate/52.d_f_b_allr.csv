@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-District of Columbia,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,Data not presented,Data not presented,Data not presented
-Alaska,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,Data not presented,Data not presented,Data not presented
+District of Columbia,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,,,
+Alaska,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,,,
 Hawaii,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,2.2,22,702640
 Puerto Rico,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,2.2,60,1726244
 New Mexico,Brain and Other Nervous System,2020,Female,All Races and Ethnicities,Mortality,2.9,42,1063860

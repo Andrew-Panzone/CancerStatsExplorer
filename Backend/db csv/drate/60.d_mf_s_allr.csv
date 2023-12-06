@@ -1,6 +1,6 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-Wyoming,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,Data not presented,Data not presented,Data not presented
-District of Columbia,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,Data not presented,Data not presented,Data not presented
+Wyoming,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,,,
+District of Columbia,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,,,
 Montana,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,1.3,19,1080577
 South Dakota,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,1.5,18,892717
 North Dakota,Stomach,2020,Male and Female,All Races and Ethnicities,Mortality,1.7,17,765309

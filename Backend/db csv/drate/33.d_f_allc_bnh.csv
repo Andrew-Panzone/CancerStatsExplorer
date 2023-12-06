@@ -1,16 +1,16 @@
 Area,Cancer Type,Year,Sex,Race,Type,Age-Adjusted Rate,Death Count,Population
-Hawaii,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Idaho,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-North Dakota,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-South Dakota,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Vermont,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Maine,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Utah,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-New Hampshire,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Montana,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Wyoming,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Alaska,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
-Puerto Rico,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,Data not presented,Data not presented,Data not presented
+Hawaii,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Idaho,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+North Dakota,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+South Dakota,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Vermont,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Maine,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Utah,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+New Hampshire,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Montana,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Wyoming,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Alaska,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
+Puerto Rico,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,,,
 Rhode Island,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,101.3,35,36949
 New Mexico,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,120,27,21330
 Massachusetts,All Types of Cancer,2020,Female,Black Non-Hispanic,Mortality,120.4,343,281496
