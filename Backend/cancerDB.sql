@@ -10,7 +10,7 @@ CREATE DATABASE cancerstatisticdb;
 USE cancerstatisticdb;
 
 -- create the tables
-
+-- lol testing
 CREATE TABLE demographicgroup # DO THIS FIRST -- Insert these via created csv
 (
   groupID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
