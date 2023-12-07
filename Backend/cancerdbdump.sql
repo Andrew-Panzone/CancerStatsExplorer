@@ -297,7 +297,7 @@ CREATE TABLE `user_action` (
 
 LOCK TABLES `user_action` WRITE;
 /*!40000 ALTER TABLE `user_action` DISABLE KEYS */;
-INSERT INTO `user_action` VALUES ('AddTable','Professional, Admin'),('RemoveTable','Admin'),('Update','Professional, Admin');
+INSERT INTO `user_action` VALUES ('AddEntry','Professional, Admin'),('RemoveEntry','Admin'),('UpdateEntry','Professional, Admin'), ('Login', 'Viewer, Professional, Admin'), ('Logout', 'Viewer, Professional, Admin');
 /*!40000 ALTER TABLE `user_action` ENABLE KEYS */;
 UNLOCK TABLES;
 

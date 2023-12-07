@@ -322,7 +322,26 @@ public class CancerStatisticApp {
     gbc.gridwidth = 2; // Span across two columns for the query button
     queryPanel.add(queryButton, gbc);
 
-    if ("Professional".equals(userRole) || "Administrator".equals(userRole)) {
+    if ("Administrator".equals(userRole)) {
+      JButton openActivityLogButton = new JButton("Open Activity Log Query Panel");
+      openActivityLogButton.setFont(MEDIUM_BUTTON_FONT);
+      openActivityLogButton.setPreferredSize(LONG_BUTTON_DIMENSION);
+      openActivityLogButton.addActionListener(e -> {
+        frame.setContentPane(createActivityLogQueryPanel(frame, userRole));
+        frame.revalidate();
+        frame.repaint();
+      });
+      JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
+      openQueryWindowButton.setFont(MEDIUM_BUTTON_FONT);
+      openQueryWindowButton.setPreferredSize(LONG_BUTTON_DIMENSION);
+      openQueryWindowButton.addActionListener(e -> {
+        frame.setContentPane(createProfessionalReportQueryPanel(frame, userRole));
+        frame.revalidate();
+        frame.repaint();
+      });
+      queryPanel.add(openActivityLogButton);
+      queryPanel.add(openQueryWindowButton);
+    } else if ("Professional".equals(userRole)) {
       JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
       openQueryWindowButton.setFont(MEDIUM_BUTTON_FONT);
       openQueryWindowButton.setPreferredSize(LONG_BUTTON_DIMENSION);
@@ -527,6 +546,92 @@ public class CancerStatisticApp {
 
   public String[] fetchSpecializations() {
     String sql = "SELECT DISTINCT specialization FROM professional";
+    return fetchData(sql);
+  }
+
+  public static JPanel createActivityLogQueryPanel(JFrame frame, String userRole) {
+    JPanel queryPanel = new JPanel();
+    queryPanel.setLayout(new FlowLayout());
+    queryPanel.setBackground(BACKGROUND_COLOR);
+
+    JComboBox<String> usernameComboBox = new JComboBox<>();
+    usernameComboBox.addItem("All Users");
+    String[] usernames = new CancerStatisticApp().fetchUsernames();
+    for (String username : usernames) {
+      usernameComboBox.addItem(username);
+    }
+    usernameComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    usernameComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+
+    JButton queryButton = new JButton("Query");
+    queryButton.setFont(LARGE_BUTTON_FONT);
+    queryButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
+    queryPanel.add(usernameComboBox);
+    queryPanel.add(queryButton);
+
+    JButton backButton = new JButton("Back");
+    backButton.setFont(LARGE_BUTTON_FONT);
+    backButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
+    backButton.addActionListener(e -> {
+      frame.setContentPane(createQueryPanel(frame, userRole));
+      frame.revalidate();
+      frame.repaint();
+    });
+    queryPanel.add(backButton);
+
+    // Add ActionListener for queryButton here to execute and display query results
+    queryButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String selectedUser = (String) usernameComboBox.getSelectedItem();
+        String[] columnNames = {"Log ID", "Username", "Action Type", "Action Description", "Timestamp"};
+
+        // Construct SQL query
+        String sql = selectedUser.equals("All Users")
+            ? "SELECT * FROM activitylog"
+            : "SELECT * FROM activitylog WHERE username = ?";
+
+        try (Connection conn = new CancerStatisticApp().connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+          if (!selectedUser.equals("All Users")) {
+            pstmt.setString(1, selectedUser);
+          }
+
+          try (ResultSet rs = pstmt.executeQuery()) {
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+              Object[] row = new Object[columnNames.length];
+              for (int i = 0; i < row.length; i++) {
+                row[i] = rs.getObject(i + 1); // ResultSet is 1-indexed
+              }
+              model.addRow(row);
+            }
+
+            JTable table = new JTable(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+
+            // Display the table in a new frame or a dialog
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Activity Log Results");
+            dialog.add(scrollPane);
+            dialog.setSize(800, 400);
+            dialog.setVisible(true);
+          }
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+          JOptionPane.showMessageDialog(queryPanel, "Error executing query: " + ex.getMessage(), "Query Error", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
+
+    return queryPanel;
+  }
+
+  public String[] fetchUsernames() {
+    String sql = "SELECT username FROM users";
     return fetchData(sql);
   }
 }
