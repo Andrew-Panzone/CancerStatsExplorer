@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableModel;
 
 public class CancerStatisticApp {
   private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/cancerstatisticdb"; // Update this line
@@ -44,7 +45,7 @@ public class CancerStatisticApp {
     // Create the main frame
     JFrame frame = new JFrame("Cancer Statistic Application");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(300, 200);
+    frame.setSize(1000, 800);
 
     // Create UI elements
     JTextField usernameField = new JTextField(20);
@@ -77,8 +78,23 @@ public class CancerStatisticApp {
         boolean isAuthenticated = new CancerStatisticApp().loginUser(username, password);
         if (isAuthenticated) {
           JOptionPane.showMessageDialog(frame, "Login successful!");
-          frame.setContentPane(createQueryPanel());
-          frame.validate();
+          String userRole = new CancerStatisticApp().getUserRole(username);
+
+          frame.getContentPane().removeAll(); // Clear the existing components
+
+          if ("Analyst".equals(userRole) || "Administrator".equals(userRole)) {
+            JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
+            openQueryWindowButton.addActionListener(e2 -> {
+              frame.setContentPane(createProfessionalReportQueryPanel());
+              frame.revalidate();
+              frame.repaint();
+            });
+            frame.getContentPane().add(openQueryWindowButton);
+          }
+
+          frame.getContentPane().add(createQueryPanel()); // Add the query panel or other default content
+          frame.revalidate(); // Revalidate the frame
+          frame.repaint();    // Repaint the frame
         } else {
           JOptionPane.showMessageDialog(frame, "Login failed.");
         }
@@ -107,6 +123,27 @@ public class CancerStatisticApp {
 
     // Show the frame
     frame.setVisible(true);
+  }
+
+  public String getUserRole(String username) {
+    String role = null;
+    String sql = "SELECT role FROM users WHERE username = ?";
+
+    try (Connection conn = this.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, username);
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          role = rs.getString("role");
+        }
+      }
+    } catch (SQLException e) {
+      System.out.println("Error fetching user role: " + e.getMessage());
+      e.printStackTrace();
+    }
+
+    return role;
   }
 
   private Connection connect() {
@@ -176,27 +213,63 @@ public class CancerStatisticApp {
   }
 
   public static JPanel createQueryPanel() {
-    JPanel queryPanel = new JPanel();
-    JComboBox<String> stateComboBox = new JComboBox<>(new CancerStatisticApp().fetchStates()); // Populate with actual data
+    JPanel queryPanel = new JPanel(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(2, 2, 2, 2); // Margin between components
+    gbc.anchor = GridBagConstraints.WEST;
+
+    JComboBox<String> stateComboBox = new JComboBox<>(new CancerStatisticApp().fetchStates());
     JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
     JComboBox<String> sexComboBox = new JComboBox<>(new CancerStatisticApp().fetchSexes());
     JComboBox<String> raceComboBox = new JComboBox<>(new CancerStatisticApp().fetchRaces());
+    JRadioButton incidenceRateButton = new JRadioButton("Incidence Rate", true);
+    JRadioButton deathRateButton = new JRadioButton("Death Rate");
+    ButtonGroup tableSelectionGroup = new ButtonGroup();
+    tableSelectionGroup.add(incidenceRateButton);
+    tableSelectionGroup.add(deathRateButton);
     JButton queryButton = new JButton("Query");
 
-    queryPanel.setLayout(new FlowLayout());
-    queryPanel.add(new JLabel("State:"));
-    queryPanel.add(stateComboBox);
-    queryPanel.add(new JLabel("Cancer Type:"));
-    queryPanel.add(cancerTypeComboBox);
-    queryPanel.add(new JLabel("Sex:"));
-    queryPanel.add(sexComboBox);
-    queryPanel.add(new JLabel("Race:"));
-    queryPanel.add(raceComboBox);
-    queryPanel.add(queryButton);
+    // Add components to the panel with GridBagConstraints
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    queryPanel.add(new JLabel("State:"), gbc);
+    gbc.gridx = 1;
+    queryPanel.add(stateComboBox, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    queryPanel.add(new JLabel("Cancer Type:"), gbc);
+    gbc.gridx = 1;
+    queryPanel.add(cancerTypeComboBox, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    queryPanel.add(new JLabel("Sex:"), gbc);
+    gbc.gridx = 1;
+    queryPanel.add(sexComboBox, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    queryPanel.add(new JLabel("Race:"), gbc);
+    gbc.gridx = 1;
+    queryPanel.add(raceComboBox, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    queryPanel.add(incidenceRateButton, gbc);
+    gbc.gridx = 1;
+    queryPanel.add(deathRateButton, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 5;
+    gbc.gridwidth = 2; // Span across two columns for the query button
+    queryPanel.add(queryButton, gbc);
 
     queryButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        String selectedTable = incidenceRateButton.isSelected() ? "incidencerate" : "deathrate";
+        String selectedState = (String) stateComboBox.getSelectedItem();
         // Perform the query based on selected items
         // String state = (String) stateComboBox.getSelectedItem();
         // Add logic to perform the query and display results
@@ -239,5 +312,76 @@ public class CancerStatisticApp {
       System.out.println("Error fetching data: " + e.getMessage());
     }
     return data.toArray(new String[0]);
+  }
+
+  public static JPanel createProfessionalReportQueryPanel() {
+    JPanel queryPanel = new JPanel();
+    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
+    JButton queryButton = new JButton("Query");
+
+    queryPanel.setLayout(new FlowLayout());
+    queryPanel.add(new JLabel("Cancer Type:"));
+    queryPanel.add(cancerTypeComboBox);
+    queryPanel.add(queryButton);
+
+    queryButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String cancerType = (String) cancerTypeComboBox.getSelectedItem();
+        String[] columnNames = {"Professional Name", "Specialization", "Cancer Type", "Patient Name"};
+
+        // Construct SQL query
+        String sql = "SELECT professional.name, professional.specialization, report.cancer_type, patient.name " +
+            "FROM report " +
+            "JOIN professional ON report.professional = professional.id " +
+            "JOIN patient ON report.patient = patient.id " +
+            "WHERE report.cancer_type = ?";
+
+        try (Connection conn = new CancerStatisticApp().connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+          pstmt.setString(1, cancerType);
+
+          try (ResultSet rs = pstmt.executeQuery()) {
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+              String profName = rs.getString(1); // the first column is professional.name
+              String spec = rs.getString(2); // the second column is professional.specialization
+              String cancer = rs.getString(3); // the third column is report.cancer_type
+              String patientName = rs.getString(4); // the fourth column is patient.name
+
+              model.addRow(new Object[]{profName, spec, cancer, patientName});
+            }
+
+            JTable table = new JTable(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+
+            // Display the table in a new frame or a dialog
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Query Results");
+            dialog.add(scrollPane);
+            dialog.setSize(800, 400);
+            dialog.setVisible(true);
+          }
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+          JOptionPane.showMessageDialog(queryPanel, "Error executing query: " + ex.getMessage(), "Query Error", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
+
+    return queryPanel;
+  }
+
+  public String[] fetchProfessionalNames() {
+    String sql = "SELECT name FROM professional";
+    return fetchData(sql);
+  }
+
+  public String[] fetchSpecializations() {
+    String sql = "SELECT DISTINCT specialization FROM professional";
+    return fetchData(sql);
   }
 }
