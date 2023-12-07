@@ -117,14 +117,14 @@ public class CancerStatisticApp {
           if ("Professional".equals(userRole) || "Administrator".equals(userRole)) {
             JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
             openQueryWindowButton.addActionListener(e2 -> {
-              frame.setContentPane(createProfessionalReportQueryPanel());
+              frame.setContentPane(createProfessionalReportQueryPanel(frame));
               frame.revalidate();
               frame.repaint();
             });
             frame.getContentPane().add(openQueryWindowButton);
           }
 
-          frame.getContentPane().add(createQueryPanel()); // Add the query panel or other default content
+          frame.getContentPane().add(createQueryPanel(frame)); // Add the query panel or other default content
           frame.revalidate(); // Revalidate the frame
           frame.repaint();    // Repaint the frame
         } else {
@@ -146,6 +146,13 @@ public class CancerStatisticApp {
             new CancerStatisticApp().registerUser(username, password, role);
           } else {
             JOptionPane.showMessageDialog(frame, "Incorrect Admin Password", "Error", JOptionPane.ERROR_MESSAGE);
+          }
+        } else if ("Professional".equals(role)) {
+          String professionalPin = JOptionPane.showInputDialog(frame, "Enter Professional Pin:");
+          if (professionalPin != null && professionalPin.equals("12345")) {
+            new CancerStatisticApp().registerUser(username, password, role);
+          } else {
+            JOptionPane.showMessageDialog(frame, "Incorrect Professional Pin", "Error", JOptionPane.ERROR_MESSAGE);
           }
         } else {
           new CancerStatisticApp().registerUser(username, password, role);
@@ -244,7 +251,7 @@ public class CancerStatisticApp {
     return generatedPassword;
   }
 
-  public static JPanel createQueryPanel() {
+  public static JPanel createQueryPanel(JFrame frame) {
     JPanel queryPanel = new JPanel(new GridBagLayout());
     queryPanel.setBackground(BACKGROUND_COLOR);
     GridBagConstraints gbc = new GridBagConstraints();
@@ -428,7 +435,7 @@ public class CancerStatisticApp {
     return data.toArray(new String[0]);
   }
 
-  public static JPanel createProfessionalReportQueryPanel() {
+  public static JPanel createProfessionalReportQueryPanel(JFrame frame) {
     JPanel queryPanel = new JPanel();
     queryPanel.setLayout(new FlowLayout());
     queryPanel.setBackground(BACKGROUND_COLOR);
@@ -446,6 +453,20 @@ public class CancerStatisticApp {
     queryButton.setFont(LARGE_BUTTON_FONT);
     queryButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
     queryPanel.add(queryButton);
+
+    // Back button
+    JButton backButton = new JButton("Back to Main Query");
+    backButton.setFont(LARGE_BUTTON_FONT);
+    backButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
+    backButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        frame.setContentPane(createQueryPanel(frame)); // Switch back to the main query panel
+        frame.revalidate();
+        frame.repaint();
+      }
+    });
+    queryPanel.add(backButton);
 
     queryButton.addActionListener(new ActionListener() {
       @Override
