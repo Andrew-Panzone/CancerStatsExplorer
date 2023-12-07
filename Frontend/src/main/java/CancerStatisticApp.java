@@ -218,7 +218,13 @@ public class CancerStatisticApp {
     gbc.insets = new Insets(2, 2, 2, 2); // Margin between components
     gbc.anchor = GridBagConstraints.WEST;
 
-    JComboBox<String> stateComboBox = new JComboBox<>(new CancerStatisticApp().fetchStates());
+    JComboBox<String> stateComboBox = new JComboBox<>();
+    stateComboBox.addItem("All"); // Adds "All" as the first item
+    // Fetches and add states from the database
+    String[] states = new CancerStatisticApp().fetchStates();
+    for (String state : states) {
+      stateComboBox.addItem(state);
+    }
     JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
     JComboBox<String> sexComboBox = new JComboBox<>(new CancerStatisticApp().fetchSexes());
     JComboBox<String> raceComboBox = new JComboBox<>(new CancerStatisticApp().fetchRaces());
@@ -232,7 +238,7 @@ public class CancerStatisticApp {
     // Add components to the panel with GridBagConstraints
     gbc.gridx = 0;
     gbc.gridy = 0;
-    queryPanel.add(new JLabel("State:"), gbc);
+    queryPanel.add(new JLabel("State/Territory:"), gbc);
     gbc.gridx = 1;
     queryPanel.add(stateComboBox, gbc);
 
@@ -268,11 +274,65 @@ public class CancerStatisticApp {
     queryButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        String selectedTable = incidenceRateButton.isSelected() ? "incidencerate" : "deathrate";
         String selectedState = (String) stateComboBox.getSelectedItem();
-        // Perform the query based on selected items
-        // String state = (String) stateComboBox.getSelectedItem();
-        // Add logic to perform the query and display results
+        String selectedCancerType = (String) cancerTypeComboBox.getSelectedItem();
+        String selectedSex = (String) sexComboBox.getSelectedItem();
+        String selectedRace = (String) raceComboBox.getSelectedItem();
+        boolean isIncidenceRate = incidenceRateButton.isSelected();
+
+        String tableName = isIncidenceRate ? "incidencerate" : "deathrate";
+        String[] columnNames = isIncidenceRate ?
+            new String[]{"State", "Cancer Type", "Sex", "Race", "Incidence Rate", "Case Count", "Population"} :
+            new String[]{"State", "Cancer Type", "Sex", "Race", "Death Rate", "Death Count", "Population"};
+
+        // Construct SQL query
+        String stateCondition = "All".equals(selectedState) ? "1" : "state = ?";
+        String sql = "SELECT state, cancertype, sex, race, " +
+            (isIncidenceRate ? "i_rate, case_count, population " : "d_rate, death_count, population ") +
+            "FROM " + tableName + " " +
+            "WHERE " + stateCondition + " AND cancertype = ? AND sex = ? AND race = ?";
+
+        try (Connection conn = new CancerStatisticApp().connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+          // Set parameters based on state selection
+          if (!"All".equals(selectedState)) {
+            pstmt.setString(1, selectedState);
+            pstmt.setString(2, selectedCancerType);
+            pstmt.setString(3, selectedSex);
+            pstmt.setString(4, selectedRace);
+          } else {
+            pstmt.setString(1, selectedCancerType);
+            pstmt.setString(2, selectedSex);
+            pstmt.setString(3, selectedRace);
+          }
+
+          try (ResultSet rs = pstmt.executeQuery()) {
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+              Object[] row = new Object[columnNames.length];
+              for (int i = 0; i < row.length; i++) {
+                row[i] = rs.getObject(i + 1); // ResultSet is 1-indexed
+              }
+              model.addRow(row);
+            }
+
+            JTable table = new JTable(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+
+            // Display the table in a new frame or a dialog
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Query Results");
+            dialog.add(scrollPane);
+            dialog.setSize(800, 400);
+            dialog.setVisible(true);
+          }
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+          JOptionPane.showMessageDialog(queryPanel, "Error executing query: " + ex.getMessage(), "Query Error", JOptionPane.ERROR_MESSAGE);
+        }
       }
     });
 
