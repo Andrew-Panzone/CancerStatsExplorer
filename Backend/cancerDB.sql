@@ -32,9 +32,8 @@ CREATE TABLE users
 
 CREATE TABLE user_action
 (
-	a_type INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	role_requirement INT,
-	action_description VARCHAR(200) NOT NULL
+	a_type VARCHAR(64) PRIMARY KEY NOT NULL,
+	role_requirement VARCHAR(64)
 );
 
 
@@ -43,7 +42,7 @@ CREATE TABLE activitylog
     logid INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     time_stamp TIMESTAMP NOT NULL,
     username VARCHAR(50) NOT NULL,
-    log_action INT NOT NULL,
+    log_action VARCHAR(64) NOT NULL,
     log_description VARCHAR(200) NOT NULL,
     FOREIGN KEY (username) REFERENCES users(username) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (log_action) REFERENCES user_action(a_type) ON UPDATE CASCADE ON DELETE CASCADE
