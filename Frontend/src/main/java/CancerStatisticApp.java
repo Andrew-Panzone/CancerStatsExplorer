@@ -17,6 +17,15 @@ public class CancerStatisticApp {
   private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/cancerstatisticdb"; // Update this line
   private static String USERNAME;
   private static String PASSWORD;
+  // Common styling elements
+  private static final Font LABEL_FONT = new Font("Futura", Font.BOLD, 14);
+  private static final Color BACKGROUND_COLOR = new Color(245, 221, 203, 255); // Light lavender
+  private static final Font LARGE_LABEL_FONT = new Font("Futura", Font.BOLD, 18);
+  private static final Font LARGE_TEXT_FIELD_FONT = new Font("Futura", Font.PLAIN, 18);
+  private static final Font LARGE_BUTTON_FONT = new Font("Futura", Font.BOLD, 18);
+  private static final Dimension LARGE_BUTTON_DIMENSION = new Dimension(120, 40);
+  private static final Dimension LARGE_COMBOBOX_DIMENSION = new Dimension(200, 40);
+
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -42,30 +51,53 @@ public class CancerStatisticApp {
   }
 
   private static void createAndShowGUI() {
-    // Create the main frame
     JFrame frame = new JFrame("Cancer Statistic Application");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(1000, 800);
+    frame.setSize(1400, 600);
+    frame.getContentPane().setBackground(BACKGROUND_COLOR); // A light lavender background
 
-    // Create UI elements
-    JTextField usernameField = new JTextField(20);
-    JPasswordField passwordField = new JPasswordField(20);
-    JButton loginButton = new JButton("Login");
-    JButton registerButton = new JButton("Register");
+    // Custom font
+    Font labelFont = LABEL_FONT;
 
     // Layout
     frame.setLayout(new FlowLayout());
-    frame.add(new JLabel("Username:"));
+
+    // Username label and field
+    JLabel usernameLabel = new JLabel("Username:");
+    usernameLabel.setFont(labelFont);
+    JTextField usernameField = new JTextField(20);
+    usernameField.setFont(LARGE_TEXT_FIELD_FONT);
+    usernameField.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+    frame.add(usernameLabel);
     frame.add(usernameField);
-    frame.add(new JLabel("Password:"));
+
+    // Password label and field
+    JLabel passwordLabel = new JLabel("Password:");
+    passwordLabel.setFont(labelFont);
+    JPasswordField passwordField = new JPasswordField(20);
+    passwordField.setFont(LARGE_TEXT_FIELD_FONT);
+    passwordField.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+    frame.add(passwordLabel);
     frame.add(passwordField);
+
+    // Login and register buttons
+    JButton loginButton = new JButton("Login");
+    loginButton.setFont(LARGE_BUTTON_FONT);
+    loginButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
+    JButton registerButton = new JButton("Register");
+    registerButton.setFont(LARGE_BUTTON_FONT);
+    registerButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
     frame.add(loginButton);
     frame.add(registerButton);
 
     // Role selection
-    String[] roles = {"Viewer", "Analyst", "Administrator"};
+    String[] roles = {"Viewer", "Professional", "Administrator"};
     JComboBox<String> roleComboBox = new JComboBox<>(roles);
-    frame.add(new JLabel("Role:"));
+    roleComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    roleComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+    JLabel roleLabel = new JLabel("Role:");
+    roleLabel.setFont(labelFont);
+    frame.add(roleLabel);
     frame.add(roleComboBox);
 
     // Add action listeners
@@ -82,7 +114,7 @@ public class CancerStatisticApp {
 
           frame.getContentPane().removeAll(); // Clear the existing components
 
-          if ("Analyst".equals(userRole) || "Administrator".equals(userRole)) {
+          if ("Professional".equals(userRole) || "Administrator".equals(userRole)) {
             JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
             openQueryWindowButton.addActionListener(e2 -> {
               frame.setContentPane(createProfessionalReportQueryPanel());
@@ -214,49 +246,68 @@ public class CancerStatisticApp {
 
   public static JPanel createQueryPanel() {
     JPanel queryPanel = new JPanel(new GridBagLayout());
+    queryPanel.setBackground(BACKGROUND_COLOR);
     GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(2, 2, 2, 2); // Margin between components
-    gbc.anchor = GridBagConstraints.WEST;
+    gbc.insets = new Insets(2, 2, 2, 2);
 
     JComboBox<String> stateComboBox = new JComboBox<>();
+    stateComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    stateComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
     stateComboBox.addItem("All"); // Adds "All" as the first item
     // Fetches and add states from the database
     String[] states = new CancerStatisticApp().fetchStates();
     for (String state : states) {
       stateComboBox.addItem(state);
     }
+
     JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
+    cancerTypeComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    cancerTypeComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+
     JComboBox<String> sexComboBox = new JComboBox<>(new CancerStatisticApp().fetchSexes());
+    sexComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    sexComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+
     JComboBox<String> raceComboBox = new JComboBox<>(new CancerStatisticApp().fetchRaces());
+    raceComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    raceComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+
     JRadioButton incidenceRateButton = new JRadioButton("Incidence Rate", true);
     JRadioButton deathRateButton = new JRadioButton("Death Rate");
     ButtonGroup tableSelectionGroup = new ButtonGroup();
     tableSelectionGroup.add(incidenceRateButton);
     tableSelectionGroup.add(deathRateButton);
-    JButton queryButton = new JButton("Query");
 
     // Add components to the panel with GridBagConstraints
+    JLabel stateLabel = new JLabel("State/Territory:");
+    stateLabel.setFont(LABEL_FONT);
     gbc.gridx = 0;
     gbc.gridy = 0;
-    queryPanel.add(new JLabel("State/Territory:"), gbc);
+    queryPanel.add(stateLabel, gbc);
     gbc.gridx = 1;
     queryPanel.add(stateComboBox, gbc);
 
+    JLabel cancerTypeLabel = new JLabel("Cancer Type:");
+    cancerTypeLabel.setFont(LABEL_FONT);
     gbc.gridx = 0;
     gbc.gridy = 1;
-    queryPanel.add(new JLabel("Cancer Type:"), gbc);
+    queryPanel.add(cancerTypeLabel, gbc);
     gbc.gridx = 1;
     queryPanel.add(cancerTypeComboBox, gbc);
 
+    JLabel sexLabel = new JLabel("Sex:");
+    sexLabel.setFont(LABEL_FONT);
     gbc.gridx = 0;
     gbc.gridy = 2;
-    queryPanel.add(new JLabel("Sex:"), gbc);
+    queryPanel.add(sexLabel, gbc);
     gbc.gridx = 1;
     queryPanel.add(sexComboBox, gbc);
 
+    JLabel raceLabel = new JLabel("Race:");
+    raceLabel.setFont(LABEL_FONT);
     gbc.gridx = 0;
     gbc.gridy = 3;
-    queryPanel.add(new JLabel("Race:"), gbc);
+    queryPanel.add(raceLabel, gbc);
     gbc.gridx = 1;
     queryPanel.add(raceComboBox, gbc);
 
@@ -266,6 +317,9 @@ public class CancerStatisticApp {
     gbc.gridx = 1;
     queryPanel.add(deathRateButton, gbc);
 
+    JButton queryButton = new JButton("Query");
+    queryButton.setFont(LARGE_BUTTON_FONT);
+    queryButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
     gbc.gridx = 0;
     gbc.gridy = 5;
     gbc.gridwidth = 2; // Span across two columns for the query button
@@ -376,12 +430,21 @@ public class CancerStatisticApp {
 
   public static JPanel createProfessionalReportQueryPanel() {
     JPanel queryPanel = new JPanel();
-    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
-    JButton queryButton = new JButton("Query");
-
     queryPanel.setLayout(new FlowLayout());
-    queryPanel.add(new JLabel("Cancer Type:"));
+    queryPanel.setBackground(BACKGROUND_COLOR);
+
+    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
+    cancerTypeComboBox.setFont(LARGE_TEXT_FIELD_FONT);
+    cancerTypeComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
+
+    JLabel cancerTypeLabel = new JLabel("Cancer Type:");
+    cancerTypeLabel.setFont(LARGE_LABEL_FONT);
+    queryPanel.add(cancerTypeLabel);
     queryPanel.add(cancerTypeComboBox);
+
+    JButton queryButton = new JButton("Query");
+    queryButton.setFont(LARGE_BUTTON_FONT);
+    queryButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
     queryPanel.add(queryButton);
 
     queryButton.addActionListener(new ActionListener() {
@@ -431,7 +494,6 @@ public class CancerStatisticApp {
         }
       }
     });
-
     return queryPanel;
   }
 
