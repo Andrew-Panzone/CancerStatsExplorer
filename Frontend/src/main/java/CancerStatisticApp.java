@@ -23,7 +23,9 @@ public class CancerStatisticApp {
   private static final Font LARGE_LABEL_FONT = new Font("Futura", Font.BOLD, 18);
   private static final Font LARGE_TEXT_FIELD_FONT = new Font("Futura", Font.PLAIN, 18);
   private static final Font LARGE_BUTTON_FONT = new Font("Futura", Font.BOLD, 18);
+  private static final Font MEDIUM_BUTTON_FONT = new Font("Futura", Font.BOLD, 12);
   private static final Dimension LARGE_BUTTON_DIMENSION = new Dimension(120, 40);
+  private static final Dimension LONG_BUTTON_DIMENSION = new Dimension(300, 40);
   private static final Dimension LARGE_COMBOBOX_DIMENSION = new Dimension(200, 40);
 
 
@@ -111,20 +113,8 @@ public class CancerStatisticApp {
         if (isAuthenticated) {
           JOptionPane.showMessageDialog(frame, "Login successful!");
           String userRole = new CancerStatisticApp().getUserRole(username);
-
           frame.getContentPane().removeAll(); // Clear the existing components
-
-          if ("Professional".equals(userRole) || "Administrator".equals(userRole)) {
-            JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
-            openQueryWindowButton.addActionListener(e2 -> {
-              frame.setContentPane(createProfessionalReportQueryPanel(frame));
-              frame.revalidate();
-              frame.repaint();
-            });
-            frame.getContentPane().add(openQueryWindowButton);
-          }
-
-          frame.getContentPane().add(createQueryPanel(frame)); // Add the query panel or other default content
+          frame.getContentPane().add(createQueryPanel(frame, userRole)); // Add the query panel or other default content
           frame.revalidate(); // Revalidate the frame
           frame.repaint();    // Repaint the frame
         } else {
@@ -251,7 +241,7 @@ public class CancerStatisticApp {
     return generatedPassword;
   }
 
-  public static JPanel createQueryPanel(JFrame frame) {
+  public static JPanel createQueryPanel(JFrame frame, String userRole) {
     JPanel queryPanel = new JPanel(new GridBagLayout());
     queryPanel.setBackground(BACKGROUND_COLOR);
     GridBagConstraints gbc = new GridBagConstraints();
@@ -331,6 +321,18 @@ public class CancerStatisticApp {
     gbc.gridy = 5;
     gbc.gridwidth = 2; // Span across two columns for the query button
     queryPanel.add(queryButton, gbc);
+
+    if ("Professional".equals(userRole) || "Administrator".equals(userRole)) {
+      JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
+      openQueryWindowButton.setFont(MEDIUM_BUTTON_FONT);
+      openQueryWindowButton.setPreferredSize(LONG_BUTTON_DIMENSION);
+      openQueryWindowButton.addActionListener(e -> {
+        frame.setContentPane(createProfessionalReportQueryPanel(frame, userRole));
+        frame.revalidate();
+        frame.repaint();
+      });
+      queryPanel.add(openQueryWindowButton);
+    }
 
     queryButton.addActionListener(new ActionListener() {
       @Override
@@ -435,7 +437,7 @@ public class CancerStatisticApp {
     return data.toArray(new String[0]);
   }
 
-  public static JPanel createProfessionalReportQueryPanel(JFrame frame) {
+  public static JPanel createProfessionalReportQueryPanel(JFrame frame, String userRole) {
     JPanel queryPanel = new JPanel();
     queryPanel.setLayout(new FlowLayout());
     queryPanel.setBackground(BACKGROUND_COLOR);
@@ -455,13 +457,13 @@ public class CancerStatisticApp {
     queryPanel.add(queryButton);
 
     // Back button
-    JButton backButton = new JButton("Back to Main Query");
+    JButton backButton = new JButton("Back");
     backButton.setFont(LARGE_BUTTON_FONT);
     backButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        frame.setContentPane(createQueryPanel(frame)); // Switch back to the main query panel
+        frame.setContentPane(createQueryPanel(frame, userRole)); // Switch back to the main query panel
         frame.revalidate();
         frame.repaint();
       }
