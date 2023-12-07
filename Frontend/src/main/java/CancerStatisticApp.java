@@ -42,7 +42,7 @@ public class CancerStatisticApp {
     try (Connection conn = new CancerStatisticApp().connect()) {
       if (conn != null) {
         SwingUtilities.invokeLater(() -> {
-          createAndShowGUI();
+          createAndShowGUI(new JFrame());
         });
       } else {
         System.out.println("Failed to establish a database connection.");
@@ -52,7 +52,9 @@ public class CancerStatisticApp {
     }
   }
 
-  private static void createAndShowGUI() {
+  private static void createAndShowGUI(JFrame oldFrame) {
+    oldFrame.getContentPane().removeAll();
+    oldFrame.dispose();
     JFrame frame = new JFrame("Cancer Statistic Application");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(1400, 600);
@@ -417,6 +419,18 @@ public class CancerStatisticApp {
         }
       }
     });
+
+    JButton logOutButton = new JButton("Log Out");
+    logOutButton.setFont(LARGE_BUTTON_FONT);
+    logOutButton.setPreferredSize(LARGE_BUTTON_DIMENSION);
+    logOutButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        // Call createAndShowGUI to reset the application to the initial login screen
+        createAndShowGUI(frame);
+      }
+    });
+    queryPanel.add(logOutButton);
 
     return queryPanel;
   }
