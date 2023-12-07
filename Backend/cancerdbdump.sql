@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `cancerstatisticdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `cancerstatisticdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `cancerstatisticdb`;
 -- MySQL dump 10.13  Distrib 8.0.34, for macos13 (arm64)
 --
@@ -28,13 +28,13 @@ CREATE TABLE `activitylog` (
   `logid` int NOT NULL AUTO_INCREMENT,
   `time_stamp` timestamp NOT NULL,
   `username` varchar(50) NOT NULL,
-  `log_action` int NOT NULL,
+  `log_action` varchar(64) DEFAULT NULL,
   `log_description` varchar(200) NOT NULL,
   PRIMARY KEY (`logid`),
   KEY `username` (`username`),
   KEY `log_action` (`log_action`),
   CONSTRAINT `activitylog_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `activitylog_ibfk_2` FOREIGN KEY (`log_action`) REFERENCES `user_action` (`a_type`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `activitylog_ibfk_2` FOREIGN KEY (`log_action`) REFERENCES `user_action` (`a_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -285,9 +285,8 @@ DROP TABLE IF EXISTS `user_action`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_action` (
-  `a_type` int NOT NULL AUTO_INCREMENT,
-  `role_requirement` int DEFAULT NULL,
-  `action_description` varchar(200) NOT NULL,
+  `a_type` varchar(64) NOT NULL,
+  `role_requirement` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`a_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -298,6 +297,7 @@ CREATE TABLE `user_action` (
 
 LOCK TABLES `user_action` WRITE;
 /*!40000 ALTER TABLE `user_action` DISABLE KEYS */;
+INSERT INTO `user_action` VALUES ('AddTable','Professional, Admin'),('RemoveTable','Admin'),('Update','Professional, Admin');
 /*!40000 ALTER TABLE `user_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-06 18:20:10
+-- Dump completed on 2023-12-07  1:39:35
