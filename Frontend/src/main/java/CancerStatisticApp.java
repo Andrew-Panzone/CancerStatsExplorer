@@ -136,22 +136,27 @@ public class CancerStatisticApp {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         String role = (String) roleComboBox.getSelectedItem();
+        boolean badRequest = false;
+        if(username.length() <= 0 || password.length() <= 0) {
+          JOptionPane.showMessageDialog(frame, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
+          badRequest = true;
+        }
 
-        if ("Administrator".equals(role)) {
+        if ("Administrator".equals(role) && !badRequest) {
           String adminPassword = JOptionPane.showInputDialog(frame, "Enter Admin Password:");
           if (adminPassword != null && adminPassword.equals("cancerdbadmin")) {
             new CancerStatisticApp().registerUser(username, password, role);
           } else {
             JOptionPane.showMessageDialog(frame, "Incorrect Admin Password", "Error", JOptionPane.ERROR_MESSAGE);
           }
-        } else if ("Professional".equals(role)) {
+        } else if ("Professional".equals(role) && !badRequest) {
           String professionalPin = JOptionPane.showInputDialog(frame, "Enter Professional Pin:");
           if (professionalPin != null && professionalPin.equals("12345")) {
             new CancerStatisticApp().registerUser(username, password, role);
           } else {
             JOptionPane.showMessageDialog(frame, "Incorrect Professional Pin", "Error", JOptionPane.ERROR_MESSAGE);
           }
-        } else {
+        } else if (!badRequest) {
           new CancerStatisticApp().registerUser(username, password, role);
         }
       }
