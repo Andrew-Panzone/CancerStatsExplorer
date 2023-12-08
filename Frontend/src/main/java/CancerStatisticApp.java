@@ -18,6 +18,7 @@ public class CancerStatisticApp {
   private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/cancerstatisticdb";
   private static String USERNAME;
   private static String PASSWORD;
+  private static String currentUsername;
 
   // Common styling elements
   private static final Font LABEL_FONT = new Font("Futura", Font.BOLD, 14);
@@ -116,6 +117,8 @@ public class CancerStatisticApp {
         boolean isAuthenticated = new CancerStatisticApp().loginUser(username, password);
         if (isAuthenticated) {
           JOptionPane.showMessageDialog(frame, "Login successful!");
+          new CancerStatisticApp().logUserActivity(username, "Login", "User logged in successfully.");
+          currentUsername = username; // Set the global username
           String userRole = new CancerStatisticApp().getUserRole(username);
           frame.getContentPane().removeAll(); // Clear the existing components
           frame.getContentPane().add(createQueryPanel(frame, userRole)); // Add the query panel or other default content
@@ -428,7 +431,11 @@ public class CancerStatisticApp {
               model.addRow(row);
             }
 
-            JTable table = new JTable(model);
+            JTable table = new JTable(model){
+              public boolean isCellEditable(int row, int column) {
+                return column >= 5; // Makes only the rate, count, and population columns editable
+              }
+            };
             JScrollPane scrollPane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
 
@@ -445,7 +452,7 @@ public class CancerStatisticApp {
               int selectedRow = table.getSelectedRow();
               if (selectedRow != -1) {
                 int id = (Integer) table.getValueAt(selectedRow, 0);
-                new CancerStatisticApp().deleteEntryFromIncidenceRate(id);
+                new CancerStatisticApp().deleteEntryFromRateTable(id, isIncidenceRate);
                 ((DefaultTableModel) table.getModel()).removeRow(selectedRow); // Remove from table
               } else {
                 JOptionPane.showMessageDialog(dialog, "Please select an entry to delete.");
@@ -456,11 +463,12 @@ public class CancerStatisticApp {
             dialog.setLayout(new BorderLayout());
             JPanel buttonPanel = new JPanel(); // Panel to hold the button
             buttonPanel.add(deleteButton);
+            JButton updateButton = new CancerStatisticApp().createUpdateButton(table, isIncidenceRate, frame, userRole);
+            buttonPanel.add(updateButton);
             dialog.add(buttonPanel, BorderLayout.SOUTH);
             dialog.setTitle("Query Results");
             dialog.add(scrollPane);
             dialog.setSize(800, 400);
-
 
             dialog.setVisible(true);
           }
@@ -478,6 +486,8 @@ public class CancerStatisticApp {
       @Override
       public void actionPerformed(ActionEvent e) {
         // Call createAndShowGUI to reset the application to the initial login screen
+        new CancerStatisticApp().logUserActivity(currentUsername, "Logout", "User logged out successfully.");
+        currentUsername = null;
         createAndShowGUI(frame);
       }
     });
@@ -649,7 +659,7 @@ public class CancerStatisticApp {
       @Override
       public void actionPerformed(ActionEvent e) {
         String selectedUser = (String) usernameComboBox.getSelectedItem();
-        String[] columnNames = {"Log ID", "Username", "Action Type", "Action Description", "Timestamp"};
+        String[] columnNames = {"Log ID", "Timestamp", "Username", "Action Type", "Action Description"};
 
         // Construct SQL query
         String sql = selectedUser.equals("All Users")
@@ -788,14 +798,15 @@ public class CancerStatisticApp {
       pstmt.executeUpdate();
 
       JOptionPane.showMessageDialog(null, "Entry added successfully");
+      logUserActivity(currentUsername, "AddEntry", "Added new incidence rate entry.");
     } catch (SQLException e) {
       System.out.println("Error adding entry: " + e.getMessage());
       JOptionPane.showMessageDialog(null, "Error adding entry: " + e.getMessage());
     }
   }
 
-  public void deleteEntryFromIncidenceRate(int id) {
-    String sql = "DELETE FROM incidencerate WHERE id = ?";
+  public void deleteEntryFromRateTable(int id, boolean isIncidenceRate) {
+    String sql = "DELETE FROM " + (isIncidenceRate ? "incidencerate" : "deathrate") + " WHERE id = ?";
     try (Connection conn = this.connect();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, id);
@@ -803,12 +814,74 @@ public class CancerStatisticApp {
 
       if (affectedRows > 0) {
         JOptionPane.showMessageDialog(null, "Entry deleted successfully");
+        logUserActivity(currentUsername, "RemoveEntry", "Deleted rate table entry.");
       } else {
         JOptionPane.showMessageDialog(null, "Entry could not be found");
       }
     } catch (SQLException e) {
       System.out.println("Error deleting entry: " + e.getMessage());
       JOptionPane.showMessageDialog(null, "Error deleting entry: " + e.getMessage());
+    }
+  }
+
+  private JButton createUpdateButton(JTable table, boolean isIncidenceRate, JFrame frame, String userRole) {
+    JButton updateButton = new JButton("Update Selected Entry");
+    updateButton.setFont(LARGE_BUTTON_FONT);
+    updateButton.addActionListener(e -> {
+      if (!hasRequiredRole("UpdateEntry", userRole)) {
+        JOptionPane.showMessageDialog(frame, "You do not have permission to perform this action.");
+        return;
+      }
+      int selectedRow = table.getSelectedRow();
+      if (selectedRow != -1) {
+        updateEntryInRateTable(table, selectedRow, isIncidenceRate);
+      } else {
+        JOptionPane.showMessageDialog(frame, "Please select an entry to update.");
+      }
+    });
+    return updateButton;
+  }
+
+  public void updateEntryInRateTable(JTable table, int row, boolean isIncidenceRate) {
+    int id = (Integer) table.getValueAt(row, 0); // Assuming first column is ID
+    double rate = Double.parseDouble(table.getValueAt(row, 5).toString());
+    int count = Integer.parseInt(table.getValueAt(row, 6).toString());
+    int population = Integer.parseInt(table.getValueAt(row, 7).toString());
+
+    String sql = "UPDATE " + (isIncidenceRate ? "incidencerate" : "deathrate") +
+        " SET " + (isIncidenceRate ? "i_rate" : "d_rate") + " = ?, " +
+        (isIncidenceRate ? "case_count" : "death_count") + " = ?, population = ? " +
+        "WHERE id = ?";
+    try (Connection conn = connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setDouble(1, rate);
+      pstmt.setInt(2, count);
+      pstmt.setInt(3, population);
+      pstmt.setInt(4, id);
+      int affectedRows = pstmt.executeUpdate();
+
+      if (affectedRows > 0) {
+        JOptionPane.showMessageDialog(null, "Entry updated successfully");
+        logUserActivity(currentUsername, "UpdateEntry", "Updated rate table entry.");
+      } else {
+        JOptionPane.showMessageDialog(null, "Entry could not be found");
+      }
+    } catch (SQLException e) {
+      System.out.println("Error updating entry: " + e.getMessage());
+      JOptionPane.showMessageDialog(null, "Error updating entry: " + e.getMessage());
+    }
+  }
+
+  public void logUserActivity(String username, String actionType, String description) {
+    String sql = "INSERT INTO activitylog (time_stamp, username, log_action, log_description) VALUES (NOW(), ?, ?, ?)";
+    try (Connection conn = connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, username);
+      pstmt.setString(2, actionType);
+      pstmt.setString(3, description);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println("Error logging user activity: " + e.getMessage());
     }
   }
 }
