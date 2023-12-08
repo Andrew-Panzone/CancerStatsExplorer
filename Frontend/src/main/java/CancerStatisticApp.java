@@ -15,9 +15,10 @@ import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class CancerStatisticApp {
-  private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/cancerstatisticdb"; // Update this line
+  private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/cancerstatisticdb";
   private static String USERNAME;
   private static String PASSWORD;
+
   // Common styling elements
   private static final Font LABEL_FONT = new Font("Futura", Font.BOLD, 14);
   private static final Color BACKGROUND_COLOR = new Color(245, 221, 203, 255); // Light lavender
@@ -390,15 +391,16 @@ public class CancerStatisticApp {
 
         String tableName = isIncidenceRate ? "incidencerate" : "deathrate";
         String[] columnNames = isIncidenceRate ?
-            new String[]{"State", "Cancer Type", "Sex", "Race", "Incidence Rate", "Case Count", "Population"} :
-            new String[]{"State", "Cancer Type", "Sex", "Race", "Death Rate", "Death Count", "Population"};
+            new String[]{"ID", "State", "Cancer Type", "Sex", "Race", "Incidence Rate", "Case Count", "Population"} :
+            new String[]{"ID", "State", "Cancer Type", "Sex", "Race", "Death Rate", "Death Count", "Population"};
 
         // Construct SQL query
         String stateCondition = "All".equals(selectedState) ? "1" : "state = ?";
-        String sql = "SELECT state, cancertype, sex, race, " +
+        String sql = "SELECT id, state, cancertype, sex, race, " +
             (isIncidenceRate ? "i_rate, case_count, population " : "d_rate, death_count, population ") +
             "FROM " + tableName + " " +
             "WHERE " + stateCondition + " AND cancertype = ? AND sex = ? AND race = ?";
+
 
         try (Connection conn = new CancerStatisticApp().connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -430,11 +432,36 @@ public class CancerStatisticApp {
             JScrollPane scrollPane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
 
-            // Display the table in a new frame or a dialog
+            // Display the table in a new dialog
             JDialog dialog = new JDialog();
+
+            JButton deleteButton = new JButton("Delete Selected Entry");
+            deleteButton.setFont(LARGE_BUTTON_FONT);
+            deleteButton.addActionListener(e2 -> {
+              if (!new CancerStatisticApp().hasRequiredRole("RemoveEntry", userRole)) {
+                JOptionPane.showMessageDialog(dialog, "You do not have permission to perform this action.");
+                return;
+              }
+              int selectedRow = table.getSelectedRow();
+              if (selectedRow != -1) {
+                int id = (Integer) table.getValueAt(selectedRow, 0);
+                new CancerStatisticApp().deleteEntryFromIncidenceRate(id);
+                ((DefaultTableModel) table.getModel()).removeRow(selectedRow); // Remove from table
+              } else {
+                JOptionPane.showMessageDialog(dialog, "Please select an entry to delete.");
+              }
+            });
+
+            // Add the delete button to the dialog
+            dialog.setLayout(new BorderLayout());
+            JPanel buttonPanel = new JPanel(); // Panel to hold the button
+            buttonPanel.add(deleteButton);
+            dialog.add(buttonPanel, BorderLayout.SOUTH);
             dialog.setTitle("Query Results");
             dialog.add(scrollPane);
             dialog.setSize(800, 400);
+
+
             dialog.setVisible(true);
           }
         } catch (SQLException ex) {
@@ -764,6 +791,24 @@ public class CancerStatisticApp {
     } catch (SQLException e) {
       System.out.println("Error adding entry: " + e.getMessage());
       JOptionPane.showMessageDialog(null, "Error adding entry: " + e.getMessage());
+    }
+  }
+
+  public void deleteEntryFromIncidenceRate(int id) {
+    String sql = "DELETE FROM incidencerate WHERE id = ?";
+    try (Connection conn = this.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, id);
+      int affectedRows = pstmt.executeUpdate();
+
+      if (affectedRows > 0) {
+        JOptionPane.showMessageDialog(null, "Entry deleted successfully");
+      } else {
+        JOptionPane.showMessageDialog(null, "Entry could not be found");
+      }
+    } catch (SQLException e) {
+      System.out.println("Error deleting entry: " + e.getMessage());
+      JOptionPane.showMessageDialog(null, "Error deleting entry: " + e.getMessage());
     }
   }
 }
