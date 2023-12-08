@@ -273,7 +273,7 @@ CREATE TABLE `state` (
 
 LOCK TABLES `state` WRITE;
 /*!40000 ALTER TABLE `state` DISABLE KEYS */;
-INSERT INTO `state` VALUES ('Alabama'),('Alaska'),('Arizona'),('Arkansas'),('California'),('Colorado'),('Connecticut'),('Delaware'),('District of Columbia'),('Florida'),('Georgia'),('Hawaii'),('Idaho'),('Illinois'),('Indiana'),('Iowa'),('Kansas'),('Kentucky'),('Louisiana'),('Maine'),('Maryland'),('Massachusetts'),('Michigan'),('Minnesota'),('Mississippi'),('Missouri'),('Montana'),('Nebraska'),('Nevada'),('New Hampshire'),('New Jersey'),('New Mexico'),('New York'),('North Carolina'),('North Dakota'),('Ohio'),('Oklahoma'),('Oregon'),('Pennsylvania'),('Puerto Rico'),('Rhode Island'),('South Carolina'),('South Dakota'),('Tennessee'),('Texas'),('Utah'),('Vermont'),('Virginia'),('Washington'),('West Virginia'),('Wisconsin'),('Wyoming');
+INSERT INTO `state` VALUES ('All'),('Alabama'),('Alaska'),('Arizona'),('Arkansas'),('California'),('Colorado'),('Connecticut'),('Delaware'),('District of Columbia'),('Florida'),('Georgia'),('Hawaii'),('Idaho'),('Illinois'),('Indiana'),('Iowa'),('Kansas'),('Kentucky'),('Louisiana'),('Maine'),('Maryland'),('Massachusetts'),('Michigan'),('Minnesota'),('Mississippi'),('Missouri'),('Montana'),('Nebraska'),('Nevada'),('New Hampshire'),('New Jersey'),('New Mexico'),('New York'),('North Carolina'),('North Dakota'),('Ohio'),('Oklahoma'),('Oregon'),('Pennsylvania'),('Puerto Rico'),('Rhode Island'),('South Carolina'),('South Dakota'),('Tennessee'),('Texas'),('Utah'),('Vermont'),('Virginia'),('Washington'),('West Virginia'),('Wisconsin'),('Wyoming');
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +297,7 @@ CREATE TABLE `user_action` (
 
 LOCK TABLES `user_action` WRITE;
 /*!40000 ALTER TABLE `user_action` DISABLE KEYS */;
-INSERT INTO `user_action` VALUES ('AddEntry','Professional, Admin'),('RemoveEntry','Admin'),('UpdateEntry','Professional, Admin'), ('Login', 'Viewer, Professional, Admin'), ('Logout', 'Viewer, Professional, Admin');
+INSERT INTO `user_action` VALUES ('AddEntry','Professional, Administrator'),('RemoveEntry','Administrator'),('UpdateEntry','Professional, Administrator'), ('Login', 'Viewer, Professional, Administrator'), ('Logout', 'Viewer, Professional, Administrator');
 /*!40000 ALTER TABLE `user_action` ENABLE KEYS */;
 UNLOCK TABLES;
 

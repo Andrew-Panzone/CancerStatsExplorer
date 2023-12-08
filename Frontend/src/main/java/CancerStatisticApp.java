@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -249,15 +250,9 @@ public class CancerStatisticApp {
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.insets = new Insets(2, 2, 2, 2);
 
-    JComboBox<String> stateComboBox = new JComboBox<>();
+    JComboBox<String> stateComboBox = new JComboBox<>(new CancerStatisticApp().fetchStates());
     stateComboBox.setFont(LARGE_TEXT_FIELD_FONT);
     stateComboBox.setPreferredSize(LARGE_COMBOBOX_DIMENSION);
-    stateComboBox.addItem("All"); // Adds "All" as the first item
-    // Fetches and add states from the database
-    String[] states = new CancerStatisticApp().fetchStates();
-    for (String state : states) {
-      stateComboBox.addItem(state);
-    }
 
     JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
     cancerTypeComboBox.setFont(LARGE_TEXT_FIELD_FONT);
@@ -341,8 +336,14 @@ public class CancerStatisticApp {
         frame.revalidate();
         frame.repaint();
       });
-      queryPanel.add(openActivityLogButton);
-      queryPanel.add(openQueryWindowButton);
+      gbc.gridx = 2;
+      gbc.gridy = 1;
+      gbc.gridwidth = 2; // Span across two columns for the query button
+      queryPanel.add(openActivityLogButton, gbc);
+      gbc.gridx = 2;
+      gbc.gridy = 2;
+      gbc.gridwidth = 2; // Span across two columns for the query button
+      queryPanel.add(openQueryWindowButton, gbc);
     } else if ("Professional".equals(userRole)) {
       JButton openQueryWindowButton = new JButton("Open Professional & Report Query Panel");
       openQueryWindowButton.setFont(MEDIUM_BUTTON_FONT);
@@ -352,8 +353,31 @@ public class CancerStatisticApp {
         frame.revalidate();
         frame.repaint();
       });
-      queryPanel.add(openQueryWindowButton);
+      gbc.gridx = 2;
+      gbc.gridy = 1;
+      gbc.gridwidth = 2; // Span across two columns for the query button
+      queryPanel.add(openQueryWindowButton, gbc);
     }
+
+    // Inside createQueryPanel method
+    JButton addEntryButton = new JButton("Add Entry to Incidence Rate");
+    addEntryButton.setFont(MEDIUM_BUTTON_FONT);
+    addEntryButton.setPreferredSize(LONG_BUTTON_DIMENSION);
+    gbc.gridx = 2;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2; // Span across two columns for the query button
+    queryPanel.add(addEntryButton, gbc);
+
+    addEntryButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (new CancerStatisticApp().hasRequiredRole("AddEntry", userRole)) {
+          new CancerStatisticApp().openAddEntryDialog(frame, userRole);
+        } else {
+          JOptionPane.showMessageDialog(frame, "You do not have permission to perform this action.");
+        }
+      }
+    });
 
     queryButton.addActionListener(new ActionListener() {
       @Override
@@ -446,12 +470,12 @@ public class CancerStatisticApp {
   }
 
   public String[] fetchSexes() {
-    String sql = "SELECT DISTINCT sex FROM demographicgroup";
+    String sql = "SELECT DISTINCT sex FROM incidencerate";
     return fetchData(sql);
   }
 
   public String[] fetchRaces() {
-    String sql = "SELECT DISTINCT race FROM demographicgroup";
+    String sql = "SELECT DISTINCT race FROM incidencerate";
     return fetchData(sql);
   }
 
@@ -647,5 +671,99 @@ public class CancerStatisticApp {
   public String[] fetchUsernames() {
     String sql = "SELECT username FROM users";
     return fetchData(sql);
+  }
+
+  public boolean hasRequiredRole(String actionType, String userRole) {
+    String sql = "SELECT role_requirement FROM user_action WHERE a_type = ?";
+
+    try (Connection conn = this.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, actionType);
+
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          String requiredRoles = rs.getString("role_requirement");
+          return Arrays.asList(requiredRoles.split(", ")).contains(userRole);
+        }
+      }
+    } catch (SQLException e) {
+      System.out.println("Error verifying user role: " + e.getMessage());
+    }
+    return false;
+  }
+
+  public void openAddEntryDialog(JFrame frame, String userRole) {
+    JDialog dialog = new JDialog(frame, "Add Entry", true);
+    dialog.setLayout(new FlowLayout());
+    dialog.setBackground(BACKGROUND_COLOR);
+    dialog.setSize(1000, 300);
+
+    JComboBox<String> stateComboBox = new JComboBox<>(new CancerStatisticApp().fetchStates());
+    JComboBox<String> cancerTypeComboBox = new JComboBox<>(new CancerStatisticApp().fetchCancerTypes());
+    JTextField sexField = new JTextField(10);
+    JTextField raceField = new JTextField(10);
+    JTextField yearField = new JTextField(10);
+    JTextField iRateField = new JTextField(10);
+    JTextField caseCountField = new JTextField(10);
+    JTextField populationField = new JTextField(10);
+
+    JButton addButton = new JButton("Add");
+    addButton.addActionListener(e -> {
+      // Retrieve data from fields and call method to add entry
+      String state = stateComboBox.getSelectedItem().toString();
+      String cancerType = cancerTypeComboBox.getSelectedItem().toString();
+      String sex = sexField.getText();
+      String race = raceField.getText();
+      int year = Integer.parseInt(yearField.getText());
+      double iRate = Double.parseDouble(iRateField.getText());
+      int caseCount = Integer.parseInt(caseCountField.getText());
+      int population = Integer.parseInt(populationField.getText());
+
+      addEntryToIncidenceRate(state, cancerType, sex, race, year, iRate, caseCount, population);
+      dialog.dispose(); // Close dialog after adding entry
+    });
+
+    // Add components to dialog
+    dialog.add(new JLabel("State:"));
+    dialog.add(stateComboBox);
+    dialog.add(new JLabel("Cancer Type:"));
+    dialog.add(cancerTypeComboBox);
+    dialog.add(new JLabel("Sex:"));
+    dialog.add(sexField);
+    dialog.add(new JLabel("Race:"));
+    dialog.add(raceField);
+    dialog.add(new JLabel("Year:"));
+    dialog.add(yearField);
+    dialog.add(new JLabel("Incidence Rate:"));
+    dialog.add(iRateField);
+    dialog.add(new JLabel("Case Count:"));
+    dialog.add(caseCountField);
+    dialog.add(new JLabel("Population:"));
+    dialog.add(populationField);
+    dialog.add(addButton);
+
+    dialog.setVisible(true);
+  }
+
+  public void addEntryToIncidenceRate(String state, String cancerType, String sex,
+      String race, int year, double iRate, int caseCount, int population) {
+    String sql = "INSERT INTO incidencerate (state, cancertype, sex, race, year, i_rate, case_count, population) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    try (Connection conn = this.connect();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, state);
+      pstmt.setString(2, cancerType);
+      pstmt.setString(3, sex);
+      pstmt.setString(4, race);
+      pstmt.setInt(5, year);
+      pstmt.setDouble(6, iRate);
+      pstmt.setInt(7, caseCount);
+      pstmt.setInt(8, population);
+      pstmt.executeUpdate();
+
+      JOptionPane.showMessageDialog(null, "Entry added successfully");
+    } catch (SQLException e) {
+      System.out.println("Error adding entry: " + e.getMessage());
+      JOptionPane.showMessageDialog(null, "Error adding entry: " + e.getMessage());
+    }
   }
 }
